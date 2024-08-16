@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID,
             allowNull: false
         },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: "New Chat"
+        },
         startTime: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW

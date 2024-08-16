@@ -1,3 +1,4 @@
+const { response } = require('express');
 const { v4: uuidv4 } = require('uuid');
 
 module.exports = (sequelize, DataTypes) => {
@@ -17,16 +18,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         content: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING,
             allowNull: false
+        },
+        response: {
+            type: DataTypes.STRING,
+            allowNull: true
         },
         timestamp: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
-        },
-        senderType: {
-            type: DataTypes.ENUM('User', 'Bot'),
-            allowNull: false
         }
     });
     return Message;

@@ -6,6 +6,9 @@ const chatSlice = createSlice({
         chats: [],
     },
     "reducers": {
+        fetchallblocks: (state,action) => {
+            state.chats = action.payload
+        },
         addblock: (state,action) => {
             state.chats = [...state.chats, action.payload]
         },

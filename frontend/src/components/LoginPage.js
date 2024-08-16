@@ -46,14 +46,16 @@ function LoginPage() {
         username,
         password,
       });
-      const token = response.data.token;
-      localStorage.setItem('token', token); // Store token in local storage
-      navigate('/')
-      setError('');
-      // onLogin(token);
+        const token = response.data.token;
+        localStorage.setItem('token', token); // Store token in local storage
+        navigate('/')
+        setError('');
+        // onLogin(token);
+
     } catch (e) {
-      setError('Invalid username or password');
-      console.log(error)
+        console.log(e.response.data.error)
+        setError(e.response.data.error);
+        console.log(error)
     }
   };
 
