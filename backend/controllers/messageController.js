@@ -8,7 +8,7 @@ exports.sendMessage = async (req, res) => {
     console.log(conversationId,content)
     try {
         const message = await db.Message.create({ conversationId, userId, content });
-        const messageId = message.id;
+        const messageId = message.id; 
         const botResponse = await generateResponse(content);
         message.response = botResponse;
         await message.save();
@@ -28,10 +28,6 @@ exports.getMessages = async (req, res) => {
             where: { conversationId },
             order: [['createdAt', 'ASC']] 
         });
-
-        if (messages.length === 0) {
-            return res.status(404).json({ message: 'No messages found for this conversation' });
-        }
 
         res.status(200).json(messages);
     } catch (error) {

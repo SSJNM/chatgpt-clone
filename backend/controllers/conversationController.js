@@ -27,19 +27,19 @@ exports.startConversation = async (req, res) => {
     }
 };
 
-exports.endConversation = async (req, res) => {
+exports.deleteConversation = async (req, res) => {
     const { conversationId } = req.params;
-
+  
     try {
-        const conversation = await db.Conversation.findByPk(conversationId);
-        if (!conversation) {
-            return res.status(404).json({ error: 'Conversation not found' });
-        }
-
-        conversation.endTime = new Date();
-        await conversation.save();
-        res.status(200).json(conversation);
+      const conversation = await db.Conversation.findByPk(conversationId);
+  
+      if (!conversation) {
+        return res.status(404).json({ error: 'Conversation not found' });
+      }
+  
+      await conversation.destroy();
+      res.status(200).json({ message: 'Conversation deleted successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to end conversation' });
+      res.status(500).json({ error: 'Failed to delete conversation' });
     }
-};
+  };

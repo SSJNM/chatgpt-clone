@@ -1,6 +1,6 @@
 import classNames from "classnames"
-function Skeleton({boxcount,className}) {
 
+function Skeleton({boxcount,className,type}) {
     const staticBlockClass = classNames(
         'relative',
         'overflow-hidden',

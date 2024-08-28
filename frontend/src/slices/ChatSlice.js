@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const chatSlice = createSlice({
     "name": "chats",
     "initialState": {
-        chats: [],
+        chats: []
     },
     "reducers": {
-        fetchallblocks: (state,action) => {
+        fetchallChats: (state,action) => {
             state.chats = action.payload
         },
         addblock: (state,action) => {
@@ -25,5 +25,5 @@ const chatSlice = createSlice({
 }) 
 
 
-export const { addblock, removeblock, editblock } = chatSlice.actions
+export const { fetchallChats,addblock, removeblock, editblock } = chatSlice.actions
 export const chatSliceReducer = chatSlice.reducer;

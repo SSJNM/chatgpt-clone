@@ -4,7 +4,7 @@ import {chatSliceReducer} from '../slices/ChatSlice'
 import { historySliceReducer } from "../slices/HistorySlice";
 
 const store = configureStore({
-    "reducer": {
+    reducer: {
         chats: chatSliceReducer,
         history: historySliceReducer,
     }

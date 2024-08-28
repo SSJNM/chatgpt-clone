@@ -5,7 +5,6 @@ import App from './App';
 import { SidebarButtonProvider } from './ButtonContext';
 import {StoreProvider} from './store'
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

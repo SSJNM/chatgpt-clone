@@ -4,24 +4,27 @@ import { useDispatch } from 'react-redux'
 import { addblock } from '../slices/ChatSlice';
 import { v4 as uuidv4 } from 'uuid'; 
 
-function ChatInput(){
-    
+function ChatInput({inputText,setInputText,conversationId}){
+
     const dispatch = useDispatch()
-    const [inputText, setInput] = useState('');
   
     const handleSend = async () => {
       if (!inputText.trim()) return ;
-      const userMessage = { id: uuidv4(), text: inputText, sender: 'user' };
-      addblock(dispatch(addblock(userMessage)))
-      setInput('');
-  
+    
       try {
-        const response = await axios.post('http://localhost:5000/api/chat', { prompt: inputText });
-        const botMessage = {id: uuidv4(), text: response.data, sender: 'gpt' };
-        addblock(dispatch(addblock(botMessage)))
+
+        const token = localStorage.getItem('token')
+        const config = {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",   
+          }
+        }
+        setInputText('');
+        console.log(conversationId)
+        const response = await axios.post('http://localhost:5000/api/messages/send', { "conversationId": conversationId,content: inputText},config);
+        addblock(dispatch(addblock(response.data)))
       } catch (error) {
-        const botMessage = {id: uuidv4(), text: "Error from Server", sender: 'gpt' };
-        addblock(dispatch(addblock(botMessage)))
         console.error('Error fetching response from server:', error);
       }
   };
@@ -34,7 +37,7 @@ function ChatInput(){
       type="text"
       className="flex-1 p-2 border rounded mr-2 bg-gray-700 overflow-x-hidden overflow-y-auto"
       value={inputText}
-      onChange={(e) => setInput(e.target.value)}
+      onChange={(e) => setInputText(e.target.value)}
       onKeyPress={(e) => e.key === 'Enter' && handleSend()}
     />
     {buttonToggler}
