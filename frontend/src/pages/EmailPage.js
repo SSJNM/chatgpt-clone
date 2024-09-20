@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function EmailResponse() {
+function EmailPage() {
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -25,10 +25,10 @@ function EmailResponse() {
   }, [navigate]);
 
   return (
-    <div className='text-white'>
+    <div className='text-white' >
       <h2>Verifying your email...</h2>
     </div>
   );
 }
 
-export default EmailResponse
+export default EmailPage

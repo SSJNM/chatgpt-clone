@@ -6,6 +6,9 @@
   height: 100vh;
 }
 
+body{
+  background-color: #2d3748;
+}
 /* .App {
   position: relative;
   min-height: 100vh;

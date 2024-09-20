@@ -1,13 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-function ChatContent({ chat, textContentKey }) {
-    const [isChatFetching,setIsChatFetching] = useState(false)
-    const [isChatError,setIsChatError] = useState(null)
-
-
+function ChatContent({chat}) {
     return (
             <div
-                key={textContentKey}
                 className="flex flex-col"
             >
                 <div className='flex justify-end'>

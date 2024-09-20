@@ -1,24 +1,25 @@
 import { Button } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux'
-// import HistoryContent from './HistoryContent';
-import { fetchallblocks } from '../slices/ChatSlice';
-import Skeleton  from './Skeleton'
+import { useDispatch } from 'react-redux'
 import { fetchHistory,addHistory } from '../thunks';
+import HistoryContent from './HistoryContent';
 
 const Sidebar = ({ isSideBarOpen, setIsSideBarOpen, setInputText,inputText}) => {
 
-  const {isHistoryLoading,history,isHistoryError} = useSelector((state) => state.history)
+  const [isHistoryLoading,setIsHistoryLoading] = useState(false);
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchHistory())
+    setIsHistoryLoading(true);
+    dispatch(fetchHistory());
+    setIsHistoryLoading(false);
   }, [dispatch])
+  
 
   const handleNew = async () => {
-    const token = localStorage.getItem('token')
-    
+    // const token = localStorage.getItem('token')
+  
     try {
       dispatch(addHistory())
       setIsSideBarOpen(false)
@@ -44,47 +45,36 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen, setInputText,inputText}) => 
     }
   }
 
-  const onSelectHistory = (id) => {
-    console.log("Select history", id)
-  }
-
-  console.log("Histories are",isHistoryLoading,history,isHistoryError)
-  const historyContent = isHistoryLoading ? <Skeleton boxcount={10} className="h-5 w-full" />: (isHistoryError ? <h1>Error in Loading</h1> : history.map((conversation, index) => <div key={index}
-    className="p-2 border-b border-gray-700 cursor-pointer hover:bg-gray-700"
-    onClick={() => onSelectHistory(conversation.id)}
-  >
-    {conversation.title}
-  </div>))
+  // if(!isSideBarOpen) return <></>
   
   return (
-    <>
-      {isSideBarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-40 transition-opacity duration-300 ease-in-out"
-          onClick={() => setIsSideBarOpen(false)}
-        ></div>
-      )}
+    <div className={`absolute flex flex-1 h-full w-full transition-all duration-1000  ${isSideBarOpen ? 'z-20' : 'z-0'}`}> 
       <div
-        className={`fixed inset-0 top-0 left-0 w-64 bg-white bg-opacity-100 text-black transform transition-transform duration-300 ease-in-out ${isSideBarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`relative inset-0 w-64 h-full flex flex-col bg-sidebar-bg text-white transition-all duration-1000 ease-in-out ${isSideBarOpen ? "translate-x-0 z-20 opacity-100" : "-translate-x-full z-0 opacity-0"
           }`}
       >
-      <div className='flex mt-2'>
-          <button
-            className={`top-4 left-4 text-black z-50 transition-transform transform `}
-            onClick={() => setIsSideBarOpen(false)}
-          >
-            <FaBars size={15} className='m-2'/>
+          <div className='flex mt-2'>
+            <button
+              className={`top-4 left-4 text-black z-50 transition-transform transform `}
+              onClick={() => setIsSideBarOpen(false)}
+            >
+              <FaBars size={20} className='m-2 text-white'/>
           </button>
           <h2 className="text-2xl font-bold ml-5 ">Chat History</h2>
-      </div>
+          </div>
           <div className='flex justify-center '>
             <Button onClick={handleNew}> New Chat</Button>
           </div>
-          <div className='flex flex-col overflow-y-scroll m-4 flex-1 h-full'>
-            {historyContent}
+          <div className='flex flex-col overflow-y-auto m-4 flex-1 h-full'>
+          {isHistoryLoading ? <h1> Loading History</h1> : <HistoryContent />}
           </div>
         </div>
-    </>
+        <div
+        id="hidden-element"
+        className={`relative inset-0 bg-sidebar-bg text-white transform transition-all duration-1000 flex flex-1 ${isSideBarOpen ? 'z-20 opacity-60' : 'z-0 opacity-0'}`}
+        onClick={()=> setIsSideBarOpen(false)}
+      ></div>
+    </div>
   );
 };
 

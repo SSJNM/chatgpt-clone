@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
 
 const fetchHistory = createAsyncThunk('history/fetch', async () => {
-    console.log("Bro")
+  console.log("The history is here")
     const token = localStorage.getItem('token')
     const config = {
       headers: {
@@ -12,7 +12,6 @@ const fetchHistory = createAsyncThunk('history/fetch', async () => {
     }
     const response = await axios.get('http://localhost:5000/api/conversations',config)
     await pause(2000);
-    console.log(response)
     return response.data;
   });
 
@@ -27,7 +26,6 @@ const fetchHistory = createAsyncThunk('history/fetch', async () => {
     
     const response = await axios.post('http://localhost:5000/api/conversations/start', {} , config);
     await pause(2000);
-    console.log(response)
     return response.data;
   });
 

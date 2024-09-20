@@ -24,7 +24,7 @@ function ChatBox({conversationId,setConversationId,setIsSideBarOpen,isSideBarOpe
 
     const {chats} = useSelector((state)=> state.chats)
     
-    console.log("Chat is",chats)
+    // console.log("Chat is",chats)
     
     const dispatch = useDispatch()
 
@@ -40,7 +40,6 @@ function ChatBox({conversationId,setConversationId,setIsSideBarOpen,isSideBarOpe
         const fetchData = async () => {
             try {
               const response = await axios.get(`http://localhost:5000/api/messages/${conversationId}`,config);
-              console.log(response)
               await pause(5000)
               console.log("5 second gone")
               dispatch(fetchallChats(response.data))
@@ -54,8 +53,9 @@ function ChatBox({conversationId,setConversationId,setIsSideBarOpen,isSideBarOpe
         }).catch((err) => {
             setIsChatLoading(false)
             setIsChatEror(err)
+            console.log(isChatError)
         });
-    }, [dispatch]);
+    }, [dispatch,conversationId,isChatError]);
 
 
     const messagesEndRef = useRef(null);
@@ -72,7 +72,7 @@ function ChatBox({conversationId,setConversationId,setIsSideBarOpen,isSideBarOpe
       }, [chats]);
 
     return (
-            <div className="flex flex-1 min-h-screen bg-gray-900 text-white App">
+            <div className="flex flex-1 min-h-screen bg-gray-900 text-white App ">
                 <div className="flex flex-col flex-1 h-screen relative z-0 overflow-hidden">
                     <div className="flex items-center p-4 bg-gray-800 shadow">
                         <button

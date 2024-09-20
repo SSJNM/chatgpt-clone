@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes,Navigate } from 'react-router-dom'
-import LoginPage from './components/LoginPage';
-import ChatApp  from './components/ChatApp';
+import LoginPage from './pages/LoginPage';
+import ChatApp  from './pages/ChatApp';
 import ProtectedRoute from './components/ProtectedRoute';
-import EmailResponse from './components/EmailResponse';
+import EmailPage from './pages/EmailPage';
 
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
               <ChatApp />
             </ProtectedRoute>} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/verify-email" element={<EmailResponse />} />
+          <Route path="/verify-email" element={<EmailPage />} />
           <Route path="*" element={
             <ProtectedRoute>
               <Navigate to="/"/>

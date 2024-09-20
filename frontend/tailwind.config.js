@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{html,js,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'sidebar-bg': 'rgb(20, 31, 42)',  
+      },
+    },
     keyframes: {
       shimmer: {
         "100%": { transform: "translateX(100%)"}
